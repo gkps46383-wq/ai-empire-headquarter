@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="AI Empire business headquarters starter dashboard.">
+  <title>AI Empire | Company Headquarters</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">AI</div>
+        <div><div class="brand-name">AI EMPIRE</div><div class="brand-subtitle">COMPANY HEADQUARTERS</div></div>
+      </div>
+      <div class="owner-card">
+        <div class="owner-avatar">O</div>
+        <div><strong>Company Owner</strong><small>Founder workspace</small></div>
+      </div>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="overview"><span>▦</span> Overview</button>
+        <button class="nav-item" data-view="departments"><span>◈</span> AI Departments</button>
+        <button class="nav-item" data-view="approvals"><span>✓</span> Approval Center <b id="navPending" class="nav-count">0</b></button>
+        <button class="nav-item" data-view="businesses"><span>▣</span> Businesses</button>
+        <button class="nav-item" data-view="tasks"><span>☷</span> Tasks</button>
+        <button class="nav-item" data-view="reports"><span>▤</span> Reports</button>
+        <button class="nav-item" data-view="settings"><span>⚙</span> Settings</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="approval-note"><span class="status-dot"></span><div><strong>Approval-first mode</strong><small>No action without your approval</small></div></div>
+        <small class="version">Starter Edition · v1.0</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="menuToggle" aria-label="Toggle menu">☰</button>
+        <div><div class="eyebrow">YOUR BUSINESS COMMAND CENTER</div><h1 id="pageTitle">Overview</h1></div>
+        <div class="top-actions"><span class="local-badge"><i></i> Local prototype</span><button class="owner-button" id="ownerButton">Owner</button></div>
+      </header>
+
+      <section class="view active" id="view-overview">
+        <div class="welcome-panel">
+          <div><div class="eyebrow gold">WELCOME TO YOUR HEADQUARTERS</div><h2>Build boldly.<br><em>Stay in control.</em></h2><p>One central AI CEO. Multiple specialist departments. Every action waits for your approval.</p><button class="primary-button" data-go="departments">Explore AI departments <span>→</span></button></div>
+          <div class="orb-wrap"><div class="orb"><div class="orb-core">AI</div><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="orbit orbit-three"></span></div><div class="orb-caption">CENTRAL INTELLIGENCE</div></div>
+        </div>
+        <div class="metric-grid">
+          <article class="metric-card"><div class="metric-label">AI CEO STATUS</div><div class="metric-value"><span class="green-dot"></span> Ready</div><div class="metric-foot">Prototype workspace</div></article>
+          <article class="metric-card"><div class="metric-label">ACTIVE BUSINESSES</div><div class="metric-value" id="metricBusinesses">0</div><div class="metric-foot">Business units created</div></article>
+          <article class="metric-card"><div class="metric-label">PENDING APPROVALS</div><div class="metric-value" id="metricApprovals">0</div><div class="metric-foot">Waiting for your review</div></article>
+          <article class="metric-card"><div class="metric-label">OPEN TASKS</div><div class="metric-value" id="metricTasks">0</div><div class="metric-foot">Saved work requests</div></article>
+        </div>
+        <div class="content-grid">
+          <section class="panel">
+            <div class="section-heading"><div><div class="eyebrow">YOUR AI TEAM</div><h3>Department overview</h3></div><button class="text-button" data-go="departments">View all →</button></div>
+            <div class="department-mini-grid" id="overviewDepartments"></div>
+          </section>
+          <section class="panel">
+            <div class="section-heading"><div><div class="eyebrow">COMMAND DESK</div><h3>Send a request to your AI CEO</h3></div><span class="spark">✦</span></div>
+            <label class="field-label" for="quickRequest">What would you like the company to work on?</label>
+            <textarea id="quickRequest" placeholder="Example: Create a 30-day launch plan for my first business..."></textarea>
+            <div class="form-row"><select id="quickDepartment" aria-label="Choose department"><option>AI CEO</option><option>Finance</option><option>Marketing</option><option>Human Resources</option><option>Customer Support</option><option>Operations</option></select><button class="primary-button" id="sendQuickRequest">Submit for review →</button></div>
+            <p class="helper">Submitting saves a request for your review. It does not execute the task or contact an AI service.</p>
+          </section>
+        </div>
+        <section class="panel recent-panel"><div class="section-heading"><div><div class="eyebrow">LATEST ACTIVITY</div><h3>Recent requests</h3></div><button class="text-button" data-go="approvals">Open approval center →</button></div><div id="recentRequests" class="empty-state">No requests yet. Your activity will appear here.</div></section>
+      </section>
+
+      <section class="view" id="view-departments">
+        <div class="page-intro"><div class="eyebrow">SPECIALIST AI TEAM</div><h2>AI Departments</h2><p>Each department has a clear responsibility and reports to your central AI CEO.</p></div>
+        <div class="department-grid" id="departmentGrid"></div>
+        <section class="panel detail-panel" id="departmentDetail"><div class="eyebrow">SELECTED DEPARTMENT</div><h3>AI CEO</h3><p>Your central coordinator. It turns your goals into proposed tasks for specialist departments. In this starter version, it does not connect to a live AI model.</p></section>
+      </section>
+
+      <section class="view" id="view-approvals">
+        <div class="page-intro"><div class="eyebrow">OWNER CONTROL</div><h2>Approval Center</h2><p>Review every proposed action. Nothing is automatically executed.</p></div>
+        <div class="notice"><strong>🔒 Your approval is required.</strong> Marking a request as approved records your decision only. It does not perform an external action.</div>
+        <div id="approvalList" class="stack-list empty-state">There are no requests waiting for review.</div>
+      </section>
+
+      <section class="view" id="view-businesses">
+        <div class="page-intro"><div class="eyebrow">YOUR BUSINESS GROUP</div><h2>Businesses</h2><p>Create a record for each business you plan to launch or manage.</p></div>
+        <section class="panel">
+          <h3>Add a business</h3>
+          <form id="businessForm" class="form-grid"><div><label class="field-label" for="businessName">Business name</label><input id="businessName" required placeholder="Example: Digital Services Studio"></div><div><label class="field-label" for="businessType">Business category</label><input id="businessType" placeholder="Example: E-commerce"></div><div class="full"><label class="field-label" for="businessNotes">Notes</label><input id="businessNotes" placeholder="Goal, audience or launch idea"></div><div class="full"><button class="primary-button" type="submit">Add business record +</button></div></form>
+        </section>
+        <div id="businessList" class="business-grid empty-state">No businesses added yet.</div>
+      </section>
+
+      <section class="view" id="view-tasks">
+        <div class="page-intro"><div class="eyebrow">WORK MANAGEMENT</div><h2>Tasks</h2><p>Track requests and decisions across your company.</p></div>
+        <div id="taskList" class="stack-list empty-state">No tasks have been submitted yet.</div>
+      </section>
+
+      <section class="view" id="view-reports">
+        <div class="page-intro"><div class="eyebrow">BUSINESS INTELLIGENCE</div><h2>Reports</h2><p>A simple snapshot of the records stored in this browser.</p></div>
+        <div class="metric-grid report-grid">
+          <article class="metric-card"><div class="metric-label">TOTAL REQUESTS</div><div class="metric-value" id="reportRequests">0</div></article>
+          <article class="metric-card"><div class="metric-label">APPROVED RECORDS</div><div class="metric-value" id="reportApproved">0</div></article>
+          <article class="metric-card"><div class="metric-label">BUSINESSES</div><div class="metric-value" id="reportBusinesses">0</div></article>
+          <article class="metric-card"><div class="metric-label">COMPLETED / REVIEWED</div><div class="metric-value" id="reportReviewed">0</div></article>
+        </div>
+        <section class="panel"><div class="section-heading"><h3>Export your workspace data</h3><button class="primary-button" id="exportData">Download JSON backup ↓</button></div><p class="helper">Keep a backup before clearing browser data or changing devices.</p></section>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="page-intro"><div class="eyebrow">OWNER PREFERENCES</div><h2>Settings</h2><p>Configure the prototype's operating rules.</p></div>
+        <section class="panel settings-panel">
+          <div class="setting-row"><div><strong>Approval required for every action</strong><p>Requests are saved for review. This rule is on by default.</p></div><span class="toggle-on">ON</span></div>
+          <div class="setting-row"><div><strong>Workspace storage</strong><p>Data is stored in this browser on this device using local storage.</p></div><span class="plain-tag">LOCAL</span></div>
+          <div class="setting-row"><div><strong>Live AI connection</strong><p>No API key or AI provider is connected in this starter package.</p></div><span class="plain-tag">NOT CONNECTED</span></div>
+          <div class="setting-row"><div><strong>Owner authentication</strong><p>This prototype has no secure login. Do not publish it with private company data.</p></div><span class="plain-tag warning-tag">NOT SET UP</span></div>
+          <div class="setting-actions"><button class="secondary-button" id="exportSettings">Export backup</button><button class="danger-button" id="clearData">Clear all local data</button></div>
+        </section>
+      </section>
+      <footer>AI EMPIRE HEADQUARTERS · STARTER PACKAGE · ENGLISH EDITION</footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
