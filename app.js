@@ -1,3 +1,10 @@
+const SUPABASE_URL = https://givlcrikzcjwtrjljtpi.supabase.co;
+const SUPABASE_PUBLISHABLE_KEY = sb_publishable_hPA-lr3apkzmBJHQhqbepA_InPS5vJi;
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 const STORAGE_KEY = "aiEmpireWorkspace_v1";
 const departments = [
   {name:"AI CEO",icon:"🧠",short:"Central coordinator",desc:"Turns your goals into proposed work, assigns requests to specialist departments and prepares management summaries.",detail:"The AI CEO is the central coordinator for your business group. In the connected version, it will interpret your instructions, prepare a plan, identify which department should handle each task and ask for your approval before every action."},
