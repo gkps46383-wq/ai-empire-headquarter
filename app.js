@@ -37,3 +37,77 @@ function exportBackup(){const blob=new Blob([JSON.stringify({product:"AI Empire 
 document.getElementById("exportData").addEventListener("click",exportBackup);document.getElementById("exportSettings").addEventListener("click",exportBackup);
 document.getElementById("clearData").addEventListener("click",()=>{if(confirm("Delete all AI Empire data stored in this browser? Download a backup first if you need it.")){state={requests:[],businesses:[]};saveState();toast("Local workspace data cleared.");}});
 renderDepartments();renderAll();
+// AI EMPIRE - Supabase Login Gate
+(async function initOwnerLogin() {
+  const client = window.supabaseClient;
+
+  if (!client) {
+    alert("Supabase connection is not available.");
+    return;
+  }
+
+  const overlay = document.createElement("div");
+  overlay.id = "aiEmpireLogin";
+  overlay.style.cssText = `
+    position:fixed; inset:0; z-index:99999;
+    background:#0b1020; color:white;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px; font-family:Arial,sans-serif;
+  `;
+
+  overlay.innerHTML = `
+    <form id="ownerLoginForm" style="
+      width:100%; max-width:390px; padding:30px;
+      background:#172033; border:1px solid #334155;
+      border-radius:16px; box-sizing:border-box;">
+      <h1 style="margin-top:0">AI EMPIRE</h1>
+      <p style="color:#cbd5e1">Founder Login</p>
+      <label>Email address</label>
+      <input id="ownerEmail" type="email" required
+        autocomplete="username"
+        style="width:100%;padding:13px;margin:8px 0 18px;
+        box-sizing:border-box;border-radius:8px;">
+      <label>Password</label>
+      <input id="ownerPassword" type="password" required
+        autocomplete="current-password"
+        style="width:100%;padding:13px;margin:8px 0 18px;
+        box-sizing:border-box;border-radius:8px;">
+      <button type="submit" style="
+        width:100%;padding:14px;background:#2563eb;
+        color:white;border:0;border-radius:8px;
+        font-weight:bold;cursor:pointer;">LOGIN</button>
+      <p id="loginMessage" style="color:#fbbf24"></p>
+    </form>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const form = document.getElementById("ownerLoginForm");
+  const message = document.getElementById("loginMessage");
+
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+    message.textContent = "Signing in...";
+
+    const email = document.getElementById("ownerEmail").value.trim();
+    const password = document.getElementById("ownerPassword").value;
+
+    const { error } = await client.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      message.textContent = error.message;
+      return;
+    }
+
+    overlay.remove();
+  });
+
+  const { data } = await client.auth.getSession();
+
+  if (data.session) {
+    overlay.remove();
+  }
+})();
